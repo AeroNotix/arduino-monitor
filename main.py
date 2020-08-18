@@ -33,8 +33,8 @@ def pad_line(line):
   return line + b' ' * (20 - len(line))
 
 def get_cpu_temp(n):
-  f = open('/sys/class/thermal/thermal_zone%d/temp' % n)
-  return int(f.read()) / 1000
+  with open('/sys/class/thermal/thermal_zone%d/temp' % n) as f:
+    return int(f.read()) / 1000
 
 def parse_memory_line(line):
   return line.split(':')[-1].strip(' kB\n')
