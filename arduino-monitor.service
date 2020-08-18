@@ -1,0 +1,10 @@
+[Unit]
+Description=Arduino-based resource monitor
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/env python %h/.local/bin/arduino-monitor.py
+Restart=always
+
+[Install]
+WantedBy=default.target
