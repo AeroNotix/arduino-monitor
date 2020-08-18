@@ -12,10 +12,6 @@
 
 LiquidCrystal_I2C lcd(I2C_ADDR, LCD_COLS, LCD_ROWS);
 
-void clear_serial_buffer(char *buf) {
-    memset(buf, ' ', MAX_BUF);
-}
-
 bool read_serial_buffer(char *buf) {
     if (Serial.available()) {
         Serial.readBytes(buf, MAX_BUF);
@@ -41,6 +37,5 @@ void loop() {
 
     if (read_serial_buffer(serialBuffer)) {
         write_serial_buffer(serialBuffer, lcd);
-        clear_serial_buffer(serialBuffer);
     }
 }
