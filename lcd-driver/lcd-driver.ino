@@ -1,38 +1,47 @@
 #include <LiquidCrystal_I2C.h>
 #define MAX_BUF 80
+#ifndef I2C_ADDR
+  #define I2C_ADDR 0x3F
+#endif
+#ifndef LCD_COLS
+  #define LCD_COLS 20
+#endif
+#ifndef LCD_ROWS
+  #define LCD_ROWS 4
+#endif
 
-char serialBuffer[MAX_BUF];
-LiquidCrystal_I2C lcd(0x3F, 20, 4);
+LiquidCrystal_I2C lcd(I2C_ADDR, LCD_COLS, LCD_ROWS);
 
-void clear_serial_buffer() {
-    memset(serialBuffer, ' ', MAX_BUF);
+void clear_serial_buffer(char *buf) {
+    memset(buf, ' ', MAX_BUF);
 }
 
-bool read_serial_buffer() {
+bool read_serial_buffer(char *buf) {
     if (Serial.available()) {
-        Serial.readBytes(serialBuffer, MAX_BUF);
+        Serial.readBytes(buf, MAX_BUF);
         return true;
     }
     return false;
 }
 
-void write_serial_buffer() {
+void write_serial_buffer(char *buf, LiquidCrystal_I2C lcd) {
     lcd.clear();
     for (int x = 0; x < MAX_BUF; x++) {
-        lcd.write(serialBuffer[x]);
+        lcd.write(buf[x]);
     }
-    clear_serial_buffer();
 }
 
 void setup() {
     lcd.init();
     lcd.backlight();
     Serial.begin(115200);
-    clear_serial_buffer();
 }
 
 void loop() {
-    if (read_serial_buffer()) {
-        write_serial_buffer();
+    char serialBuffer[MAX_BUF];
+
+    if (read_serial_buffer(serialBuffer)) {
+        write_serial_buffer(serialBuffer, lcd);
+        clear_serial_buffer(serialBuffer);
     }
 }
