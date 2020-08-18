@@ -25,7 +25,6 @@ bool read_serial_buffer(char *buf) {
 }
 
 void write_serial_buffer(char *buf, LiquidCrystal_I2C lcd) {
-    lcd.clear();
     for (int x = 0; x < MAX_BUF; x++) {
         lcd.write(buf[x]);
     }
