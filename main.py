@@ -54,7 +54,7 @@ while True:
   cpu1 = get_cpu_temp(1)
   line0 = pad_line(b"CPU: %d\xdfc / %d\xdfc" % (cpu0, cpu1))
   line2 = pad_line(get_mem_info())
-  line3 = pad_line("IP: {}".format(get_ip()).encode())
+  line3 = pad_line("IP:  {}".format(get_ip()).encode())
   line4 = pad_line("{:>20}".format(datetime.datetime.fromtimestamp(time.time()).strftime('%H:%M:%S')).encode())
   write(SERIAL_CONN, b''.join([line0, line3, line2, line4]))
   time.sleep(1)
