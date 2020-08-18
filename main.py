@@ -6,8 +6,8 @@ import serial
 import datetime
 import socket
 
-PORT=os.get_env("SERIAL_PORT", "/dev/ttyUSB0")
-BAUD=int(os.get_env("SERIAL_BAUD_RATE", "115200"))
+PORT=os.getenv("SERIAL_PORT", "/dev/ttyUSB0")
+BAUD=int(os.getenv("SERIAL_BAUD_RATE", "115200"))
 
 if os.getenv("DEBUG", False):
   SERIAL_CONN = sys.stdout.buffer
